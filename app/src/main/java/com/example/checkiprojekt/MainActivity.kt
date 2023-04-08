@@ -27,5 +27,47 @@ class MainActivity : AppCompatActivity() {
             LayoutCheckbox.visibility = View.VISIBLE
             LayoutChip.visibility = View.GONE
         }
+        fun UsuwanieProduktu() {
+            val checkboxesLayout = findViewById<View>(R.id.checkboxesLayout)
+            val chipsLayout = findViewById<View>(R.id.chipsLayout)
+
+            checkboxesLayout.visibility = View.GONE
+            chipsLayout.visibility = View.VISIBLE
+
+            val GrupaChip = findViewById<ChipGroup>(R.id.chipsGroup)
+            GrupaChip.removeAllViews()
+
+            for ((groupName, items) in PrzedmiotyKoszyk) {
+                for (item in items) {
+                    if (WybraneArtykuły.contains(item)) {
+                        val chip = Chip(this)
+                        chip.text = item
+                        chip.isCloseIconVisible = true
+                        chip.tag = groupName
+
+                        when (groupName) {
+                            "Warzywa" -> {
+                                chip.chipBackgroundColor =
+                                    resources.getColorStateList(R.color.KolorWarzywa)
+                            }
+                            "Mięsa" -> {
+                                chip.chipBackgroundColor =
+                                    resources.getColorStateList(R.color.KolorMieso)
+                            }
+                            "Pieczywo" -> {
+                                chip.chipBackgroundColor =
+                                    resources.getColorStateList(R.color.KolorPieczywo)
+                            }
+                        }
+                        GrupaChip.addView(chip)
+
+                        chip.setOnCloseIconClickListener {
+                            WybraneArtykuły.remove(item)
+                            GrupaChip.removeView(chip)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
