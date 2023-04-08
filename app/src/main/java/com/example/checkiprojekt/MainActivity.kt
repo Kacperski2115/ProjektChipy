@@ -20,5 +20,12 @@ class MainActivity : AppCompatActivity() {
             "Mięsa" to listOf("Kurczak", "Szynka", "Kiełbasa"),
             "Pieczywo" to listOf("Bagietka", "Chleb", "Bułka","Bajgiel")
         )
+        fun DodawanieProduktu() {
+            val LayoutCheckbox = findViewById<View>(R.id.checkboxesLayout)
+            val LayoutChip = findViewById<View>(R.id.chipsLayout)
+
+            LayoutCheckbox.visibility = View.VISIBLE
+            LayoutChip.visibility = View.GONE
+        }
     }
 }
