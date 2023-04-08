@@ -69,5 +69,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        val GrupaPrzycisk = findViewById<RadioGroup>(R.id.radioGroup)
+
+        GrupaPrzycisk.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.Dodawanie -> DodawanieProduktu()
+                R.id.Usuwanie -> UsuwanieProduktu()
+            }
+        }
     }
 }
