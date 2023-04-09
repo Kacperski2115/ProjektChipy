@@ -77,5 +77,46 @@ class MainActivity : AppCompatActivity() {
                 R.id.Usuwanie -> UsuwanieProduktu()
             }
         }
+        val WarzywaGrupa = findViewById<ChipGroup>(R.id.warzywaCheckboxGroup)
+        val MiesaGrupa = findViewById<ChipGroup>(R.id.miesoCheckboxGroup)
+        val PieczywoGrupa = findViewById<ChipGroup>(R.id.pieczywoCheckboxGroup)
+
+        WarzywaGrupa.removeAllViews()
+        MiesaGrupa.removeAllViews()
+        PieczywoGrupa.removeAllViews()
+
+        val ListaZakupow = PrzedmiotyKoszyk.values.flatten()
+        for (item in ListaZakupow) {
+            val checkbox = Chip(this)
+            checkbox.text = item
+            checkbox.isCheckable = true
+            checkbox.tag = PrzedmiotyKoszyk.entries.firstOrNull { it.value.contains(item) }?.key
+
+            checkbox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    WybraneArtykuły.add(item)
+                } else {
+                    WybraneArtykuły.remove(item)
+                }
+            }
+            when (checkbox.tag) {
+                "Warzywa" -> WarzywaGrupa.addView(checkbox)
+                "Mięsa" -> MiesaGrupa.addView(checkbox)
+                "Pieczywo" -> PieczywoGrupa.addView(checkbox)
+            }
+            when (checkbox.tag) {
+                "Warzywa" -> {
+                    checkbox.chipBackgroundColor =
+                        resources.getColorStateList(R.color.KolorWarzywa)
+                }
+                "Mięsa" -> {
+                    checkbox.chipBackgroundColor =
+                        resources.getColorStateList(R.color.KolorMieso)
+                }
+                "Pieczywo" -> {
+                    checkbox.chipBackgroundColor = resources.getColorStateList(R.color.KolorPieczywo)
+                }
+            }
+        }
     }
 }
